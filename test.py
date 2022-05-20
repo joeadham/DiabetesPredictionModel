@@ -1,12 +1,20 @@
 import streamlit as st
 
 def check(text):
-          if type(text) == str:
-            st.write("Please enter an integer")
+        if not text.isnumeric():
+            st.warning("please enter integer")
+            
+            
+def calculate(a,b,c,d,e,f):
+   if(a.isnumeric() and b.isnumeric() and c.isnumeric() and d.isnumeric and e.isnumeric and f.isnumeric):
+       return True
+   else:
+       return False
+                      
 def main():
     # st.title("Females above 21 years old diabetes prediction form")
     html_temp = """
-    <div style="background-color:#0278ae;padding:10px">
+    <div style="background-color:lightblue;padding:10px;border-left:6px dodgerblue">
     <h2 style="color:white;text-align:center;">Females above 21 years old diabetes prediction form </h2>
     </div>
     """
@@ -17,19 +25,25 @@ def main():
     Age= st.number_input("Age",min_value=21)
     Glucose =st.text_input("Glucose concentration",0)
     check(Glucose)
-    BloodPressure=st.text_input("Blood Pressure (mm Hg)")
+    BloodPressure=st.text_input("Blood Pressure (mm Hg)",0)
     check(BloodPressure)
-    SkinThickness=st.text_input("Triceps Skin Fold Thickness")
+    SkinThickness=st.text_input("Triceps Skin Fold Thickness",0)
     check(SkinThickness)
-    Insulin=st.text_input("2 Hour serum insulin level")
+    Insulin=st.text_input("2 Hour serum insulin level",0)
     check(Insulin)
-    BMI=st.text_input("BMI")
+    BMI=st.text_input("BMI",0)
     check(BMI)
-    DiabetesPedigreeFunction=st.text_input("Diabetes pedigree function")
+    DiabetesPedigreeFunction=st.text_input("Diabetes pedigree function",0)
     check(DiabetesPedigreeFunction)
 
     
-    st.button("Submit")
+    if st.button("Submit"):
+       if calculate(Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction):
+           st.success("DONE")
+           #Function should be instead of done
+       else: 
+           st.warning("please check, all inputs must be integers")
+     
         # result=predict_note_authentication(age,gender,polyuria,polydipsia,weight,weakness,polyphagia,genital_thrush,visual_blurring,itching,irritability, delayed_healing,partial_paresis,muscle_stiffness,alopecia,obesity)
         # if result ==1:
         #     st.warning('You might have Diabeties. Please consult with a Doctor.')
