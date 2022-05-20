@@ -1,4 +1,10 @@
 import streamlit as st
+import numpy as np
+import pandas as pd 
+
+
+df = pd.read_csv('diabetes.csv')
+
 
 def check(text):
         if not text.isnumeric():
@@ -10,6 +16,40 @@ def calculate(a,b,c,d,e,f):
        return True
    else:
        return False
+   
+    
+cols = ["Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI"]
+for col in cols:
+    df[col].replace(0,np.NaN,inplace=True)
+    
+# We can fill in NaN values with a median according to the target
+for col in df.columns:
+    df.loc[(df["Outcome"]==0) & (df[col].isnull()),col] = df[df["Outcome"]==0][col].median()
+    df.loc[(df["Outcome"]==1) & (df[col].isnull()),col] = df[df["Outcome"]==1][col].median()
+   
+from sklearn.model_selection import train_test_split
+X = df [['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
+       'BMI', 'DiabetesPedigreeFunction', 'Age']]
+Y = df['Outcome']
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=44, shuffle =True)
+
+
+
+from sklearn.ensemble import RandomForestClassifier
+RandomForestClassifierModel = RandomForestClassifier(n_estimators=70,max_depth=5,random_state=33) 
+RandomForestClassifierModel.fit(X_train, y_train)
+
+
+def predict_diabetes(pregnancies, Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction, Age):
+
+    prediction=RandomForestClassifierModel.predict(np.array([[int(pregnancies),int(Glucose),int(BloodPressure),int(SkinThickness),int(Insulin),int(BMI),int(DiabetesPedigreeFunction),int(Age)]]))
+    print(prediction)
+    return prediction
+   
+    
+   
+    
+   
                       
 def main():
     # st.title("Females above 21 years old diabetes prediction form")
@@ -35,11 +75,17 @@ def main():
     check(BMI)
     DiabetesPedigreeFunction=st.text_input("Diabetes pedigree function",0)
     check(DiabetesPedigreeFunction)
+    
+   
 
     
     if st.button("Submit"):
-       if calculate(Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction):
-           st.success("DONE")
+       if calculate(Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction ):
+           result=predict_diabetes(pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction,Age)
+           if (result == 1) :
+               st.warning('You might have Diabeties. Please consult with a Doctor.')
+           else:
+                st.success("Hurray! You don't have Diabeties. Please consult with Doctor for verification.")
            #Function should be instead of done
        else: 
            st.warning("please check, all inputs must be integers")
