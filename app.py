@@ -80,8 +80,8 @@ def main():
     st.markdown(html_temp,unsafe_allow_html=True)
     st.subheader("Please fill the following fields")
     
+    Age= st.slider("Age",min_value=21)
     pregnancies= st.number_input("pregnancies",min_value=0)
-    Age= st.number_input("Age",min_value=21)
     
     Glucose =st.text_input("Glucose concentration",0)
     check(Glucose)
