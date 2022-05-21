@@ -139,7 +139,7 @@ st.sidebar.image(image)
 
 st.sidebar.markdown("Using python and the dataset provided on [Kaggle](https://www.kaggle.com/datasets/mathchi/diabetes-data-set)\
                     we created a random forest machine learning model that predicts\
-                    if the a female above the age of 20 has\
+                    if a female above the age of 20 has\
                 diabetes with 90% accuracy.")
                 
 st.sidebar.markdown("Made by Cairo university systems and biomedical engineering students, for the biostatistics course.\
