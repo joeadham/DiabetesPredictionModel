@@ -23,7 +23,7 @@ def check(text):
         
         
 def check1(text):
-        if not (( text.isnumeric() or is_float(text) ) and int(text)>0):
+        if not (( text.isnumeric() or is_float(text) ) and float(text)>0):
             return False
         else :
             return True
@@ -111,6 +111,9 @@ def main():
            st.error("Please fill the fields with the correct values")
      
     
+    github = '[GitHub repository](https://github.com/joeadham/DiabetesPredictionModel)'
+    st.markdown(github, unsafe_allow_html=True)
+   
 if __name__=='__main__':
     main()
 
