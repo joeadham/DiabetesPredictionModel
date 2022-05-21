@@ -137,4 +137,10 @@ image = Image.open('diabetess2.jpg')
 
 st.sidebar.image(image)
 
-st.sidebar.text("Team 19")
+st.sidebar.markdown("Using python and the dataset provided on [Kaggle](https://www.kaggle.com/datasets/mathchi/diabetes-data-set)\
+                    we created a random forest machine learning model that predicts\
+                    if the a female above the age of 20 has\
+                diabetes with 90% accuracy.")
+                
+st.sidebar.markdown("Made by Cairo university systems and biomedical engineering students, for the biostatistics course.\
+                    Team 20, 2024 batch.")
